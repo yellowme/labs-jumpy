@@ -1,5 +1,6 @@
 window.addEventListener("load",function() {
-
+  var enemies = [];
+  var intervalId;
   var Q = window.Q = Quintus()
           .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI")
           .setup({ maximize: true })
@@ -37,6 +38,10 @@ window.addEventListener("load",function() {
       // si el enemigo recibe un golpe en la cabeza de jumpy se destruye
       this.on("bump.top",function(collision) {
         if(collision.obj.isA("Player")) { 
+          var randomnumber = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
+          Q.stage().insert(new Q.Enemy({ x: randomnumber, y: 0 }));
+          randomnumber = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
+          Q.stage().insert(new Q.Enemy({ x: randomnumber, y: 0 }));
           this.destroy();
           collision.obj.p.vy = -300;
         }
@@ -64,19 +69,39 @@ window.addEventListener("load",function() {
       x: Q.width/2 - 100 
     }));
     
-    var num = 60;
+    var num = 25;
     var element = null;
-    setInterval(function() {
-       = stage.insert(new Q.UI.Text({
-        label: num.toString(),
-        size: 54,
-        color: "white",
-        x: 100,
-        y: 100
-      }), container);
-      num = num - 1;
-      element.destroy();
-    }, 1000);
+    var addEnemy = function(){
+      if(num > 0) {
+        if(element != null) {
+          element.destroy();
+        }
+        element = stage.insert(new Q.UI.Text({
+          label: num.toString(),
+          size: 54,
+          color: "white",
+          x: 100,
+          y: 100
+        }), container);
+        num = num - 1;
+        var randomnumber = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
+        var enemy = stage.insert(new Q.Enemy({ x: randomnumber, y: 0 }));
+        enemies.push(enemy);
+      } else {
+        element.destroy();
+        element = stage.insert(new Q.UI.Text({
+          label: num.toString(),
+          size: 54,
+          color: "white",
+          x: 100,
+          y: 100
+        }), container);
+        clearInterval(intervalId); 
+        Q.clearStages();
+        Q.stageScene("endGame",1, { label: "Felicidades!!!" });
+      }
+    };
+    intervalId = setInterval(addEnemy, 1000);
 
     // crea a jumpy
     var player = stage.insert(new Q.Player());
@@ -85,14 +110,12 @@ window.addEventListener("load",function() {
     //stage.add("viewport").follow(player);
 
     // agrega un enemigo inicialmente
-    stage.insert(new Q.Enemy({ x: 700, y: 0 }));
+    var enemy = stage.insert(new Q.Enemy({ x: 700, y: 0 }));
+    enemies.push(enemy);
 
     // agrega enemigos cada determinado tiempo
-    stage.insert(new Q.Enemy({ x: 800, y: 0 }));
-
-    setInterval(function() {
-      stage.insert(new Q.Enemy({ x: 800, y: 0 }));
-    }, 3000);
+    var enemy2 = stage.insert(new Q.Enemy({ x: 800, y: 0 }));
+    enemies.push(enemy2);
   });
 
   // Crea el popup de juego finalizado
@@ -107,6 +130,8 @@ window.addEventListener("load",function() {
       Q.clearStages();
       Q.stageScene('level1');
     });
+
+    clearInterval(intervalId); 
     container.fit(20);
   });
 
