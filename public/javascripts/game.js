@@ -11,7 +11,7 @@ window.addEventListener("load",function() {
     init: function(p) {
       this._super(p, {
         sheet: "player",  
-        x: 0,           
+        x: Q.width/2,           
         y: 90             
       });
 
@@ -55,17 +55,44 @@ window.addEventListener("load",function() {
                                dataAsset: 'level.json',
                                sheet:     'tiles' }));
 
+    var container = stage.insert(new Q.UI.Container({
+      fill: "gray",
+      border: 5,
+      shadow: 10,
+      shadowColor: "rgba(0,0,0,0.5)",
+      y: 400,
+      x: Q.width/2 - 100 
+    }));
+    
+    var num = 60;
+    var element = null;
+    setInterval(function() {
+       = stage.insert(new Q.UI.Text({
+        label: num.toString(),
+        size: 54,
+        color: "white",
+        x: 100,
+        y: 100
+      }), container);
+      num = num - 1;
+      element.destroy();
+    }, 1000);
+
     // crea a jumpy
     var player = stage.insert(new Q.Player());
 
     // el nivel debe seguir al jugador
-    stage.add("viewport").follow(player);
+    //stage.add("viewport").follow(player);
 
     // agrega un enemigo inicialmente
     stage.insert(new Q.Enemy({ x: 700, y: 0 }));
 
     // agrega enemigos cada determinado tiempo
     stage.insert(new Q.Enemy({ x: 800, y: 0 }));
+
+    setInterval(function() {
+      stage.insert(new Q.Enemy({ x: 800, y: 0 }));
+    }, 3000);
   });
 
   // Crea el popup de juego finalizado
@@ -73,7 +100,7 @@ window.addEventListener("load",function() {
     var container = stage.insert(new Q.UI.Container({
       x: Q.width/2, y: Q.height/2, fill: "rgba(0,0,0,0.5)"
     }));
-    var button = container.insert(new Q.UI.Button({ x: 0, y: 0, fill: "#CCCCCC", label: "Otra vez" }))         
+    var button = container.insert(new Q.UI.Button({ x: 0, y: 0, fill: "#CCCCCC", label: "Volver a intentar" }))         
     var label = container.insert(new Q.UI.Text({x:10, y: -10 - button.p.h, label: stage.options.label }));
     // cuando seleccionan el boton se reinicia
     button.on("click",function() {
@@ -89,4 +116,5 @@ window.addEventListener("load",function() {
     Q.compileSheets("sprites.png","sprites.json");
     Q.stageScene("level1");
   });
+
 });
