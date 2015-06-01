@@ -110,11 +110,13 @@ window.addEventListener("load",function() {
     //stage.add("viewport").follow(player);
 
     // agrega un enemigo inicialmente
-    var enemy = stage.insert(new Q.Enemy({ x: 700, y: 0 }));
+    var randomnumber = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
+    var enemy = stage.insert(new Q.Enemy({ x: randomnumber, y: 0 }));
     enemies.push(enemy);
 
     // agrega enemigos cada determinado tiempo
-    var enemy2 = stage.insert(new Q.Enemy({ x: 800, y: 0 }));
+    randomnumber = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
+    var enemy2 = stage.insert(new Q.Enemy({ x: randomnumber, y: 0 }));
     enemies.push(enemy2);
   });
 
