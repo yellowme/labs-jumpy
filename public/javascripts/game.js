@@ -1,3 +1,4 @@
+var load = false;
 window.addEventListener("load",function() {
   var enemies = [];
   var intervalId;
@@ -129,12 +130,15 @@ window.addEventListener("load",function() {
     var label = container.insert(new Q.UI.Text({x:10, y: -10 - button.p.h, label: stage.options.label }));
     // cuando seleccionan el boton se reinicia    
 
-    window.on("keydown", function(key){ 
-      if(key.keyCode == 32 || key.keyCode == 13){
-        Q.clearStages();
-        Q.stageScene('level1');
-      }
-    });
+    if (!load) {
+      load = true;
+      window.on("keydown", function(key){         
+        if(key.keyCode == 32 || key.keyCode == 13){
+          Q.clearStages();
+          Q.stageScene('level1');
+        }
+      });
+    }    
     
     button.on("click",function() {
       Q.clearStages();
