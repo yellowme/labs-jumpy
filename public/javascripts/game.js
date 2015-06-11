@@ -129,15 +129,16 @@ window.addEventListener("load",function() {
     var button = container.insert(new Q.UI.Button({ x: 0, y: 0, fill: "#CCCCCC", label: "Volver a intentar" }))         
     var label = container.insert(new Q.UI.Text({x:10, y: -10 - button.p.h, label: stage.options.label }));
     // cuando seleccionan el boton se reinicia    
-
+    
     if (!load) {
       load = true;
-      window.on("keydown", function(key){         
+      window.on("keydown", function(key){
         if(key.keyCode == 32 || key.keyCode == 13){
           Q.clearStages();
           Q.stageScene('level1');
         }
       });
+      
     }    
     
     button.on("click",function() {
