@@ -1,7 +1,7 @@
-var load = false;
 window.addEventListener("load",function() {
   var enemies = [];
   var intervalId;
+  var load = false;
   var Q = window.Q = Quintus()
           .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI")
           .setup({ maximize: true })
