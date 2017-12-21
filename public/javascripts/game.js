@@ -184,8 +184,8 @@ window.addEventListener("load",function() {
     Q.compileSheets("player.png","player.json");
     Q.animations("player", {
       stand: { frames: [0], rate: 1/15, flip: false, loop: false },
-      walk_right: { frames: [0,1,2], rate: 1/15, flip: false, loop: true },
-      walk_left: { frames:  [0,1,2], rate: 1/15, flip:"x", loop: true }
+      walk_right: { frames: [0,1,2], rate: 1/30, flip: false, loop: true },
+      walk_left: { frames:  [0,1,2], rate: 1/30, flip:"x", loop: true }
     });
     Q.stageScene("level1");
   });
